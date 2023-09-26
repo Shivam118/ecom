@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCartContext } from "../../context/cartcontext";
 import "../../styles/Navbar.css";
-import { MDBBadge, MDBIcon } from "mdb-react-ui-kit";
+import { MDBBadge, MDBCardImage, MDBIcon } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { cart } = useCartContext();
   const [navBar, setNavBar] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      setLoggedIn(true);
+    }
+  }, []);
 
   const handleNavBar = () => {
     setNavBar(!navBar);
@@ -42,11 +49,21 @@ const Navbar = () => {
         <div className="functional">
           <span>
             <Link to="/profile">
-              <MDBIcon
-                far
-                icon="user-circle"
-                style={{ color: "#333", marginLeft: "20px" }}
-              />
+              {loggedIn ? (
+                <MDBCardImage
+                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  alt="avatar"
+                  className="rounded-circle"
+                  style={{ width: "30px" }}
+                  fluid
+                />
+              ) : (
+                <MDBIcon
+                  far
+                  icon="user-circle"
+                  style={{ color: "#333", marginLeft: "20px" }}
+                />
+              )}
             </Link>
           </span>
           {/* <span>

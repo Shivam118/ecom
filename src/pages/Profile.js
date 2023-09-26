@@ -7,37 +7,26 @@ import {
   MDBCardBody,
   MDBCardImage,
 } from "mdb-react-ui-kit";
-// import PersonalInfo from "./components/profile/PersonalInfo";
-import OrderHistory from "../components/profile/OrderHistory";
-import axios from "axios";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const [order, SetOrder] = useState(null);
   const [user, SetUser] = useState(null);
-
+  const navigate = useNavigate();
   const getUserInfo = async () => {
-    const user = await axios.get("http://localhost:5000/api/auth/getuser", {
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("authToken"),
-      },
-    });
-    SetUser(user.data);
+    if (localStorage.getItem("authToken") === "12345") {
+      SetUser({
+        name: "Test User",
+        email: "test@test.com",
+      });
+    }
   };
-  const getOrderInfo = async () => {
-    const res = await axios.get("http://localhost:5000/api/order/getAllOrder", {
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("authToken"),
-      },
-    });
-    SetOrder(res.data.reverse()); //reversing the array and storing in user
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/");
   };
-
   useEffect(() => {
     getUserInfo();
-    getOrderInfo();
   }, []);
 
   return (
@@ -58,10 +47,15 @@ const Profile = () => {
                 <br />
                 <p className="text-muted mb-1">{user ? user.name : ""}</p>
                 <p className="text-muted mb-4">{user ? user.email : ""}</p>
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
-          <MDBCol lg="8">{order ? <OrderHistory orders={order} /> : ""}</MDBCol>
         </MDBRow>
       </MDBContainer>
     </Wrapper>

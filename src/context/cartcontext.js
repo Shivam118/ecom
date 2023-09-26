@@ -1,7 +1,6 @@
 import { useEffect, useReducer } from "react";
 import { createContext, useContext } from "react";
 import reducer from "../reducer/cartReducer";
-import axios from "axios";
 
 const CartContext = createContext();
 
@@ -21,28 +20,7 @@ const initialState = {
 };
 
 //updating the prouducts in mongodb database
-const updateProduct = async (data) => {
-  if (localStorage.getItem("authToken") === null) return;
-
-  try {
-    let updatedData = []; //intiralized array to diractly replace items in mongo db
-
-    data = data.forEach((element) => {
-      let { productId, quantity, color, price, name, image } = element;
-      updatedData.push({ productId, quantity, color, price, name, image });
-    });
-
-    await axios.post("http://localhost:5000/cart/addItem", updatedData, {
-      //api call to push data in mongo
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("authToken"),
-      },
-    });
-  } catch (error) {
-    console.log("ERROR AT UPDATING PRODUCT", error);
-  }
-};
+const updateProduct = async (data) => {};
 
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);

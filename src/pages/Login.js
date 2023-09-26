@@ -7,14 +7,8 @@ import "../styles/Login.css";
 import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
-  const {
-    login,
-    signup,
-    onChangeLogin,
-    onChangeSignup,
-    SubmitLogin,
-    SubmitSignUp,
-  } = useUserContext();
+  const { login, signup, onChangeLogin, onChangeSignup, SubmitLogin } =
+    useUserContext();
   const { updateCartFromStorage } = useCartContext();
 
   const navigate = useNavigate(); //to redirect to other page
@@ -25,34 +19,15 @@ const Login = () => {
     try {
       await SubmitLogin();
       updateCartFromStorage();
-      navigate("/"); //redirecitng person to cart
+      navigate("/");
     } catch (error) {
       console.log(error);
-      // window.location.reload();
       toast.error("Incorrect credentials");
     }
   };
 
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
-
-    const passwordInput = document.getElementById("form7");
-    const passwordValue = passwordInput.value.toString();
-
-    if (signup.password !== passwordValue) {
-      toast.error("Password didn't matched.");
-      return;
-    }
-
-    try {
-      await SubmitSignUp();
-      updateCartFromStorage();
-      navigate("/"); //redirecitng person to cart
-    } catch (error) {
-      console.log(error);
-      // window.location.reload();
-      toast.error(error.response.data.error);
-    }
   };
 
   const handleTabClick = (value) => {
@@ -62,25 +37,8 @@ const Login = () => {
     setActiveTab(value);
   };
 
-  // const verifyAuthToken = async (token) => {
-  //   try {
-  //     if (token === null) return null;
-  //     const user = await axios.post("http://localhost:5000/api/auth/getuser", {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "auth-token": token,
-  //       },
-  //     });
-  //     return user;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return null;
-  //   }
-  // };
-
   return (
     <div className="login">
-      {/* <div className="container p-3 my-5 d-flex flex-column w-50 text"> */}
       <HeroSection page="Sign Up" />
       <ToastContainer />
       <div className="main">

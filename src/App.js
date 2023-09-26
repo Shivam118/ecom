@@ -14,7 +14,6 @@ import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./ProtectedRoute";
-import OrderSummary from "./components/profile/OrderSummary";
 import Navbar from "./components/layout/Navbar";
 
 const App = () => {
@@ -84,7 +83,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/orderSummary/:orderId" element={<OrderSummary />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />
