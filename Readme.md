@@ -19,6 +19,11 @@ To install this project, clone the repository and run `npm install` to install t
 - Users can search for items by name
 - Site is responsive and mobile friendly
 
+## Test Login
+
+- Username: test@test.com
+- Password: Test@12345
+
 ## Screenshots
 
 ### Home Page
